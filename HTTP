@@ -1,1 +1,1739 @@
+Skip to content
+CanGam88
+WorkFLowDash
+Repository navigation
+Code
+Issues
+Pull requests
+Agents
+Actions
+Projects
+Security and quality
+Insights
+Settings
+Commit af948ba
+CanGam88
+CanGam88
+authored
+1 minute ago
+Verified
+Create HTTP
+main
+1 parent 
+e890281
+ commit 
+af948ba
+1 file changed
 
++1
+Lines changed: 1 addition & 0 deletions
+File tree
+Filter files…
+HTTP
+1
+Search within code
+ 
+‎HTTP‎
++1
+Lines changed: 1 addition & 0 deletions
+Original file line number	Diff line number	Diff line change
+@@ -0,0 +1 @@
+Comment view
+CanGam88 commented now
+@CanGam88
+CanGam88
+1m ago
+Author
+<title>Mine opgaver 2026 - Master Cockpit Minimal</title> <style> :root, [data-theme="dark"] { --bg: #090d16; --card-bg: #111723; --border-color: #1b2434; --header-bg: #141c2b; --input-bg: #0b1019; --row-hover: #162030; --cal-bg: #060911; --text-main: #e2e8f0; --text-muted: #64748b; --table-text: #cbd5e1; --star-color: #eab308; }
+    [data-theme="navy"] {
+        --bg: #0f172a;
+        --card-bg: #1e293b;
+        --border-color: #334155;
+        --header-bg: #1e293b;
+        --input-bg: #0f172a;
+        --row-hover: #1e293b;
+        --cal-bg: #090e1a;
+        --text-main: #f1f5f9;
+        --text-muted: #94a3b8;
+        --table-text: #cbd5e1;
+        --star-color: #fbbf24;
+    }
+
+    [data-theme="bloom"] {
+        --bg: #070c18;
+        --card-bg: #0f182e;
+        --border-color: #1e2d4a;
+        --header-bg: #0f182e;
+        --input-bg: #091020;
+        --row-hover: #182643;
+        --cal-bg: #050812;
+        --text-main: #e0f2fe;
+        --text-muted: #60a5fa;
+        --table-text: #bae6fd;
+        --star-color: #38bdf8;
+    }
+
+    [data-theme="sage"] {
+        --bg: #161e1b;
+        --card-bg: #222d28;
+        --border-color: #33423b;
+        --header-bg: #222d28;
+        --input-bg: #101614;
+        --row-hover: #2b3832;
+        --cal-bg: #0c1210;
+        --text-main: #e2ebe6;
+        --text-muted: #83978c;
+        --table-text: #cbe0d5;
+        --star-color: #eab308;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        padding: 20px;
+        background: var(--bg);
+        color: var(--text-main);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        transition: background 0.2s ease;
+    }
+
+    button, input, select, textarea {
+        font: inherit;
+    }
+
+    .container {
+        max-width: 1600px;
+        margin: 0 auto;
+    }
+
+    .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        background: var(--card-bg);
+        padding: 10px 18px;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+    }
+
+    .nav-left,
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-tabs {
+        display: flex;
+        gap: 6px;
+    }
+
+    .nav-btn,
+    .toolbar-btn,
+    .btn-add,
+    .btn-backup-action,
+    .btn-top-timer,
+    .btn-settings,
+    .btn-modal-save,
+    .btn-star,
+    .responsible-btn,
+    .btn-task-timer,
+    .modal-close {
+        cursor: pointer;
+    }
+
+    .nav-btn {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+        padding: 8px 14px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s ease;
+    }
+
+    .nav-btn:hover {
+        color: var(--text-main);
+    }
+
+    .nav-btn.active {
+        background: var(--input-bg);
+        color: var(--text-main);
+        border: 1px solid var(--border-color);
+    }
+
+    select,
+    .search-input,
+    .status-select,
+    .day-select,
+    .priority-select,
+    .period-dropdown,
+    .theme-select,
+    .filter-select,
+    .cal-quick-select {
+        background: var(--input-bg);
+        color: var(--text-main);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        padding: 4px 8px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        outline: none;
+    }
+
+    select option {
+        background: var(--card-bg) !important;
+        color: var(--text-main) !important;
+    }
+
+    .top-timer-compact {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--input-bg);
+        padding: 4px 10px;
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+    }
+
+    .top-time-display {
+        font-size: 1.1rem;
+        font-weight: 800;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .top-timer-setup {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 0.85rem;
+        color: var(--text-main);
+    }
+
+    .top-timer-setup input {
+        width: 34px;
+        background: transparent;
+        border: none;
+        color: var(--text-main);
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .btn-top-timer {
+        border: none;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-weight: 700;
+        font-size: 0.75rem;
+    }
+
+    .btn-top-timer-start {
+        background: #f59e0b;
+        color: #000;
+    }
+
+    .btn-top-timer-reset {
+        background: transparent;
+        color: var(--text-muted);
+        border: 1px solid var(--border-color);
+    }
+
+    .settings-wrapper {
+        position: relative;
+    }
+
+    .btn-settings {
+        background: var(--input-bg);
+        color: var(--text-main);
+        border: 1px solid var(--border-color);
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+    }
+
+    .settings-dropdown {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 45px;
+        width: 220px;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        z-index: 100;
+    }
+
+    .settings-dropdown.open {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .settings-item {
+        background: transparent;
+        border: none;
+        color: var(--text-main);
+        padding: 6px 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-align: left;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .settings-item:hover {
+        background: var(--input-bg);
+    }
+
+    .color-settings-section {
+        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+        padding: 8px 0;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .color-settings-title {
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--text-muted);
+    }
+
+    .color-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .color-picker-input {
+        appearance: none;
+        width: 22px;
+        height: 22px;
+        background: transparent;
+        border: none;
+        border-radius: 50%;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .color-picker-input::-webkit-color-swatch-wrapper {
+        padding: 0;
+    }
+
+    .color-picker-input::-webkit-color-swatch {
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 50%;
+    }
+
+    .progress-strip {
+        margin: 12px 0 20px;
+        background: var(--card-bg);
+        border-radius: 8px;
+        padding: 8px 14px;
+        border: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .progress-strip-header {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+    }
+
+    .progress-strip-bar {
+        width: 100%;
+        height: 5px;
+        background: var(--input-bg);
+        border-radius: 3px;
+        overflow: hidden;
+    }
+
+    .progress-strip-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #38bdf8, #10b981);
+        width: 0%;
+        transition: width 0.4s ease;
+    }
+
+    .page {
+        display: none;
+    }
+
+    .page.active {
+        display: block;
+    }
+
+    .cockpit-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .gauge-card {
+        background: var(--card-bg);
+        padding: 12px 16px;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: border-color 0.2s ease;
+    }
+
+    .gauge-card:hover {
+        border-color: #38bdf8;
+    }
+
+    .gauge-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--text-main);
+    }
+
+    .gauge-sub {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+    }
+
+    .gauge-val-big {
+        font-size: 1.4rem;
+        font-weight: 800;
+    }
+
+    .g-done .gauge-val-big { color: #10b981; }
+    .g-active .gauge-val-big { color: #38bdf8; }
+    .g-late .gauge-val-big { color: #f43f5e; }
+    .g-todo .gauge-val-big { color: #64748b; }
+
+    .dashboard-section {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+    }
+
+    .db-card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 16px;
+        border: 1px solid var(--border-color);
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .db-card-title {
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-muted);
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .db-frog-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .db-frog-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+        padding: 12px 16px;
+        background: var(--input-bg);
+        border-radius: 10px;
+        border: 1px solid var(--border-color);
+        cursor: pointer;
+    }
+
+    .db-frog-item:hover {
+        border-color: var(--text-muted);
+    }
+
+    .db-frog-item-title strong {
+        display: block;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--text-main);
+    }
+
+    .db-frog-meta {
+        margin-top: 3px;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+    }
+
+    .db-frog-progress {
+        height: 6px;
+        background: var(--card-bg);
+        border-radius: 3px;
+        overflow: hidden;
+        margin-top: 6px;
+        width: 100%;
+        max-width: 350px;
+    }
+
+    .db-frog-progress-fill {
+        height: 100%;
+    }
+
+    .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 15px;
+        width: 100%;
+    }
+
+    .calendar-col {
+        background: var(--cal-bg);
+        border-radius: 10px;
+        padding: 14px;
+        border: 1px solid var(--border-color);
+        min-height: 180px;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease, background 0.15s ease;
+    }
+
+    .calendar-col.drag-over {
+        border-color: #38bdf8;
+        background: rgba(56, 189, 248, 0.06);
+        box-shadow: inset 0 0 0 1px rgba(56, 189, 248, 0.4), inset 0 2px 4px rgba(0,0,0,0.2);
+        transform: translateY(-1px);
+    }
+
+    .calendar-col-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 2px solid var(--border-color);
+        padding-bottom: 6px;
+        margin-bottom: 12px;
+        font-size: 0.8rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: var(--text-main);
+    }
+
+    .calendar-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .cal-card-item {
+        background: var(--card-bg);
+        border-radius: 8px;
+        padding: 12px;
+        border: 1px solid var(--border-color);
+        border-left: 6px solid #3b82f6;
+        font-size: 0.85rem;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        transition: transform 0.15s ease, border-color 0.2s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+        cursor: pointer;
+    }
+
+    .cal-card-item:hover {
+        transform: translateY(-2px);
+        border-color: var(--text-muted);
+    }
+
+    .cal-card-item.dragging {
+        opacity: 0.45;
+        transform: rotate(2deg) scale(0.99);
+        box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5);
+    }
+
+    .cal-card-item.status-done {
+        opacity: 0.45;
+    }
+
+    .cal-card-title {
+        margin-bottom: 8px;
+        font-weight: 700;
+        line-height: 1.3;
+    }
+
+    .cal-card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+    }
+
+    .cal-controls {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .controls-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+    }
+
+    .search-wrapper {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .search-input {
+        width: min(300px, 100%);
+        padding: 8px 12px;
+        border-radius: 8px;
+        background: var(--card-bg);
+    }
+
+    .task-list {
+        background: var(--card-bg);
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        overflow: hidden;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        background: var(--header-bg);
+        padding: 10px 12px;
+        text-align: left;
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    td {
+        padding: 8px 12px;
+        border-bottom: 1px solid var(--border-color);
+        font-size: 0.85rem;
+        color: var(--table-text);
+    }
+
+    tr:hover {
+        background: var(--row-hover);
+    }
+
+    .task-name-click {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+    }
+
+    .task-name-click:hover {
+        text-decoration: underline;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"] {
+        border: none;
+        background: transparent;
+        color: var(--text-main);
+        font-size: 0.85rem;
+        font-family: inherit;
+    }
+
+    input[type="text"]:focus,
+    input[type="date"]:focus {
+        outline: none;
+        background: var(--input-bg);
+        border-radius: 4px;
+    }
+
+    .task-name-field {
+        width: 100%;
+        font-weight: 600;
+    }
+
+    .task-progress-wrap {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .progress-bar {
+        width: 80px;
+        height: 4px;
+        background: var(--input-bg);
+        border-radius: 2px;
+        overflow: hidden;
+        margin-top: 4px;
+    }
+
+    .progress-fill {
+        height: 100%;
+    }
+
+    .btn-star,
+    .responsible-btn,
+    .btn-task-timer {
+        background: transparent;
+        border: none;
+        color: var(--text-muted);
+    }
+
+    .responsible-btn {
+        font-size: 1.1rem;
+    }
+
+    .btn-star.starred {
+        color: var(--star-color);
+    }
+
+    .btn-task-timer.running {
+        color: #f43f5e;
+    }
+
+    .btn-add {
+        background: var(--text-main);
+        color: var(--bg);
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 600;
+    }
+
+    .btn-backup-action {
+        background: transparent;
+        border: 1px solid var(--border-color);
+        color: var(--text-muted);
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+    }
+
+    .modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.7);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-overlay.open {
+        display: flex;
+    }
+
+    .modal-card {
+        width: min(550px, calc(100% - 32px));
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 10px;
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+
+    .modal-close {
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 1.2rem;
+    }
+
+    .modal-close:hover {
+        color: var(--text-main);
+    }
+
+    .modal-textarea {
+        width: 100%;
+        height: 140px;
+        background: var(--input-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 12px;
+        color: var(--text-main);
+        resize: vertical;
+        box-sizing: border-box;
+        outline: none;
+    }
+
+    .modal-textarea:focus {
+        border-color: var(--text-muted);
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .btn-modal-save {
+        background: #10b981;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-weight: 600;
+    }
+
+    .empty-state {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        opacity: 0.8;
+    }
+
+    @media (max-width: 1100px) {
+        .cockpit-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .calendar-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 760px) {
+        body {
+            padding: 14px;
+        }
+
+        .topbar,
+        .controls-row,
+        .search-wrapper,
+        .nav-left,
+        .nav-right {
+            flex-wrap: wrap;
+        }
+
+        .topbar {
+            align-items: flex-start;
+        }
+
+        .cockpit-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .task-list {
+            overflow-x: auto;
+        }
+    }
+</style>
+Dashboard Mine Opgaver
+            <select class="period-dropdown" id="periodSelect" onchange="setDashboardPeriod(this.value)">
+                <option value="7">1 Uge</option>
+                <option value="30">30 Dage</option>
+                <option value="90" selected>3 Måneder</option>
+                <option value="365">Hele Året</option>
+            </select>
+        </div>
+
+        <div class="nav-right">
+            <div class="top-timer-compact">
+                <div class="top-time-display" id="timeDisplay">25:00</div>
+                <div class="top-timer-setup">
+                    <input type="number" id="minutesInput" value="25" min="1" max="180" onchange="updateDuration()">m
+                </div>
+                <button class="btn-top-timer btn-top-timer-reset" onclick="resetTimer()"><i class="fa-solid fa-rotate-left"></i></button>
+                <button class="btn-top-timer btn-top-timer-start" id="startTimerBtn" onclick="toggleTimer()">Start</button>
+            </div>
+
+            <div class="settings-wrapper">
+                <button class="btn-settings" onclick="toggleSettingsMenu()"><i class="fa-solid fa-gear"></i></button>
+                <div class="settings-dropdown" id="settingsDropdown">
+                    <div style="display:flex; flex-direction:column; gap:4px;">
+                        <span class="color-settings-title">Vælg Tema</span>
+                        <select class="theme-select" id="themeSelect" onchange="changeTheme(this.value)">
+                            <option value="dark">Dark Standard</option>
+                            <option value="navy">Midnight Navy</option>
+                            <option value="bloom">Windows Bloom Blue</option>
+                            <option value="sage">Forest Sage</option>
+                        </select>
+                    </div>
+
+                    <div class="color-settings-section">
+                        <div class="color-settings-title">Prioritets-farver</div>
+                        <div class="color-row">
+                            <span style="color: var(--text-main);">Lav</span>
+                            <input type="color" id="colorPickerLav" class="color-picker-input" value="#3b82f6" onchange="updatePriorityColor('Lav', this.value)">
+                        </div>
+                        <div class="color-row">
+                            <span style="color: var(--text-main);">Mellem</span>
+                            <input type="color" id="colorPickerMellem" class="color-picker-input" value="#f59e0b" onchange="updatePriorityColor('Mellem', this.value)">
+                        </div>
+                        <div class="color-row">
+                            <span style="color: var(--text-main);">Høj</span>
+                            <input type="color" id="colorPickerHoj" class="color-picker-input" value="#f43f5e" onchange="updatePriorityColor('Høj', this.value)">
+                        </div>
+                    </div>
+
+                    <button class="settings-item" onclick="exportDataToFile()"><i class="fa-solid fa-download"></i> Gem backup</button>
+                    <button class="settings-item" onclick="triggerImportFile()"><i class="fa-solid fa-upload"></i> Hent backup</button>
+                    <input type="file" id="backupFileInput" style="display:none;" accept=".json" onchange="importDataFromFile(event)">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="progress-strip">
+        <div class="progress-strip-header">
+            <span>Samlet Fremdrift (Zonen)</span>
+            <span id="globalProgressText">0%</span>
+        </div>
+        <div class="progress-strip-bar">
+            <div class="progress-strip-fill" id="globalProgressBarFill"></div>
+        </div>
+    </div>
+
+    <main>
+        <div id="page-dashboard" class="page active">
+            <div class="cockpit-grid">
+                <div class="gauge-card g-done" onclick="kpiClickFilter('Fuldført')">
+                    <div>
+                        <div class="gauge-title">Færdige</div>
+                        <div class="gauge-sub">Mål i zonen</div>
+                    </div>
+                    <div class="gauge-val-big" id="val-done">0</div>
+                </div>
+                <div class="gauge-card g-active" onclick="kpiClickFilter('Igangsat')">
+                    <div>
+                        <div class="gauge-title">I gang</div>
+                        <div class="gauge-sub">Aktive nu</div>
+                    </div>
+                    <div class="gauge-val-big" id="val-active">0</div>
+                </div>
+                <div class="gauge-card g-late" onclick="kpiClickFilter('Kritiske')">
+                    <div>
+                        <div class="gauge-title">Kritiske</div>
+                        <div class="gauge-sub">&lt; 7 dage / overskredet</div>
+                    </div>
+                    <div class="gauge-val-big" id="val-late">0</div>
+                </div>
+                <div class="gauge-card g-todo" onclick="kpiClickFilter('Venter')">
+                    <div>
+                        <div class="gauge-title">Mangler opstart</div>
+                        <div class="gauge-sub">Afventer</div>
+                    </div>
+                    <div class="gauge-val-big" id="val-todo">0</div>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <div class="db-card">
+                    <div class="db-card-title"><span><i class="fa-solid fa-star" style="color: var(--star-color);"></i> Mit primære fokus</span></div>
+                    <div id="db-frog-content-area" class="db-frog-list"></div>
+                </div>
+
+                <div class="db-card">
+                    <div class="db-card-title">
+                        <span><i class="fa-solid fa-calendar-week"></i> Ugeplan</span>
+                        <button class="btn-backup-action" onclick="toggleHideCalDone()" id="btnHideCalDone">
+                            <i class="fa-solid fa-eye-slash"></i> Skjul færdige
+                        </button>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="calendar-col" ondragover="event.preventDefault()" ondragenter="handleCalendarDragEnter('Mandag-onsdag', event)" ondragleave="handleCalendarDragLeave('Mandag-onsdag', event)" ondrop="handleCalendarDrop('Mandag-onsdag', event)">
+                            <div class="calendar-col-title">Mandag - Onsdag <i class="fa-solid fa-calendar-day" style="opacity:0.5;"></i></div>
+                            <div class="calendar-list" id="cal-list-mon-wed"></div>
+                        </div>
+                        <div class="calendar-col" ondragover="event.preventDefault()" ondragenter="handleCalendarDragEnter('Torsdag', event)" ondragleave="handleCalendarDragLeave('Torsdag', event)" ondrop="handleCalendarDrop('Torsdag', event)">
+                            <div class="calendar-col-title">Torsdag <i class="fa-solid fa-calendar-day" style="opacity:0.5;"></i></div>
+                            <div class="calendar-list" id="cal-list-thu"></div>
+                        </div>
+                        <div class="calendar-col" ondragover="event.preventDefault()" ondragenter="handleCalendarDragEnter('Fredag', event)" ondragleave="handleCalendarDragLeave('Fredag', event)" ondrop="handleCalendarDrop('Fredag', event)">
+                            <div class="calendar-col-title">Fredag <i class="fa-solid fa-calendar-day" style="opacity:0.5;"></i></div>
+                            <div class="calendar-list" id="cal-list-fri"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-tasks" class="page">
+            <div class="controls-row">
+                <div class="search-wrapper">
+                    <input type="text" id="taskSearchInput" class="search-input" placeholder="Søg i opgaver..." oninput="handleSearch()">
+                    <select class="filter-select" id="responsibleFilter" onchange="handleFilterChange()">
+                        <option value="all">Ansvarlig: Alle</option>
+                        <option value="mine" selected>Ansvarlig: Kun mig (✅)</option>
+                        <option value="not_mine">Ansvarlig: Ikke mig (❌)</option>
+                    </select>
+                </div>
+
+                <div style="display:flex; gap:8px;">
+                    <button class="btn-backup-action" id="clearKpiBtn" onclick="clearKpiFilter()" style="display:none;"><i class="fa-solid fa-xmark"></i> Nulstil filter</button>
+                    <button class="btn-add" onclick="addNewTask()"><i class="fa-solid fa-plus"></i> Ny opgave</button>
+                </div>
+            </div>
+
+            <div class="task-list">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width:40px; text-align:center;">Ansvar</th>
+                            <th style="width:35px; text-align:center;">Fokus</th>
+                            <th>Opgavebeskrivelse</th>
+                            <th style="width:130px;">Planlagt dag</th>
+                            <th style="width:130px;">Planlagt Dato</th>
+                            <th style="width:100px;">Prioritet</th>
+                            <th style="width:120px;">Status</th>
+                            <th style="width:100px;">Fremdrift</th>
+                            <th style="width:60px; text-align:center;">Stopur</th>
+                        </tr>
+                    </thead>
+                    <tbody id="taskTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+
+<div class="modal-overlay" id="noteModal">
+    <div class="modal-card">
+        <div class="modal-header">
+            <span id="modalTaskTitle">Opgavebeskrivelse & Kommentar</span>
+            <button class="modal-close" onclick="closeNoteModal()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <textarea id="modalNoteInput" class="modal-textarea" placeholder="Skriv din kommentar eller detaljerede beskrivelse her..."></textarea>
+        <div class="modal-footer">
+            <button class="btn-modal-save" onclick="saveTaskNote()"><i class="fa-solid fa-check"></i> Gem kommentar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const STORAGE_KEY = 'workflowdash-state-v1';
+
+    const defaultPriorityColors = {
+        Lav: '#3b82f6',
+        Mellem: '#f59e0b',
+        Høj: '#f43f5e'
+    };
+
+    const defaultTasks = [
+        { id: 't1', name: 'Overvågning og tømning af betontank', responsible: true, status: 'Igangsat', priority: 'Lav', date: '2026-09-02', pct: 25, note: '', isFrog: false, plannedDay: 'Mandag-onsdag', hours: 0 },
+        { id: 't2', name: 'Ændringer til esop måske', responsible: true, status: 'Igangsat', priority: 'Høj', date: '2026-09-07', pct: 10, note: '', isFrog: false, plannedDay: 'Mandag-onsdag', hours: 0 },
+        { id: 't3', name: 'Slr måling', responsible: true, status: 'Igangsat', priority: 'Høj', date: '2026-09-02', pct: 0, note: '', isFrog: false, plannedDay: 'Mandag-onsdag', hours: 0 },
+        { id: 't4', name: '7 - Ovnbygning: Dæk 2+3 - 6S - Nødvendige eSOPs ikke opdateret', responsible: true, status: 'Igangsat', priority: 'Mellem', date: '2026-09-02', pct: 0, note: '', isFrog: false, plannedDay: 'Mandag-onsdag', hours: 0 },
+        { id: 't5', name: 'Tilføjelse til eSOP Trådning af synål', responsible: true, status: 'Igangsat', priority: 'Høj', date: '2026-09-02', pct: 40, note: '', isFrog: true, plannedDay: 'Mandag-onsdag', hours: 0 },
+        { id: 't6', name: '3 - BM-bygning - Fældekar - Imprægneringsolietank – område omkring BM-bygning - 6S - Standarder ikke kendte, synlige eller opdaterede', responsible: false, status: 'Igangsat', priority: 'Mellem', date: '2026-09-10', pct: 0, note: '', isFrog: false, plannedDay: 'Torsdag', hours: 0 },
+        { id: 't7', name: 'Udeområdet mangler en esop på AQ råvarefyldning', responsible: false, status: 'Venter', priority: 'Lav', date: '2026-09-16', pct: 0, note: '', isFrog: false, plannedDay: 'Ikke planlagt', hours: 0 },
+        { id: 't8', name: 'eSOP ønskes på visuel kontrol', responsible: true, status: 'Igangsat', priority: 'Høj', date: '2026-09-21', pct: 15, note: '', isFrog: false, plannedDay: 'Mandag-onsdag', hours: 0 },
+        { id: 't9', name: 'Omby hættestrækker - trådning af folie', responsible: false, status: 'Igangsat', priority: 'Mellem', date: '2026-08-31', pct: 0, note: '', isFrog: false, plannedDay: 'Ikke planlagt', hours: 0 },
+        { id: 't10', name: 'CE-mærkning- Produktion GL. pakkeri # 226 side 170', responsible: false, status: 'Igangsat', priority: 'Mellem', date: '2026-08-31', pct: 0, note: '', isFrog: false, plannedDay: 'Ikke planlagt', hours: 0 },
+        { id: 't11', name: 'trækstyrke (KUN OEM\'er)', responsible: true, status: 'Igangsat', priority: 'Høj', date: '2026-09-02', pct: 50, note: '', isFrog: true, plannedDay: 'Mandag-onsdag', hours: 0 },
+        { id: 't12', name: 'Vedligeholdelse af delamineringen (Vokskar tøm og rens)', responsible: true, status: 'Venter', priority: 'Mellem', date: '2026-10-26', pct: 0, note: '', isFrog: false, plannedDay: 'Ikke planlagt', hours: 0 },
+        { id: 't13', name: 'Opdatering af betjeningsvejledninger', responsible: false, status: 'Igangsat', priority: 'Lav', date: '2026-11-02', pct: 10, note: '', isFrog: false, plannedDay: 'Ikke planlagt', hours: 0 },
+        { id: 't14', name: 'Rettelse til e-SOP: Spinderskift', responsible: false, status: 'Igangsat', priority: 'Mellem', date: '2026-12-14', pct: 0, note: '', isFrog: false, plannedDay: 'Ikke planlagt', hours: 0 },
+        { id: 't15', name: 'Fines brænder', responsible: true, status: 'Igangsat', priority: 'Mellem', date: '2026-09-02', pct: 0, note: '', isFrog: false, plannedDay: 'Torsdag', hours: 0 },
+        { id: 't16', name: 'APV -mek - Udskiftning af pigbånd m.m.', responsible: false, status: 'Igangsat', priority: 'Mellem', date: '2026-08-31', pct: 0, note: '', isFrog: false, plannedDay: 'Ikke planlagt', hours: 0 }
+    ];
+
+    const state = {
+        tasks: [],
+        priorityColors: { ...defaultPriorityColors },
+        dashboardPeriodDays: 90,
+        hideCalDone: false,
+        currentKpiFilter: null,
+        searchQuery: '',
+        activeEditingTaskId: null,
+        theme: 'dark',
+        draggedTaskId: null,
+        timer: {
+            durationSeconds: 25 * 60,
+            timeLeft: 25 * 60,
+            running: false,
+            intervalId: null
+        },
+        taskTimer: {
+            runningTaskId: null,
+            intervalId: null
+        }
+    };
+
+    const refs = {
+        periodSelect: document.getElementById('periodSelect'),
+        themeSelect: document.getElementById('themeSelect'),
+        timeDisplay: document.getElementById('timeDisplay'),
+        minutesInput: document.getElementById('minutesInput'),
+        startTimerBtn: document.getElementById('startTimerBtn'),
+        settingsDropdown: document.getElementById('settingsDropdown'),
+        taskTableBody: document.getElementById('taskTableBody'),
+        taskSearchInput: document.getElementById('taskSearchInput'),
+        responsibleFilter: document.getElementById('responsibleFilter'),
+        clearKpiBtn: document.getElementById('clearKpiBtn'),
+        noteModal: document.getElementById('noteModal'),
+        modalTaskTitle: document.getElementById('modalTaskTitle'),
+        modalNoteInput: document.getElementById('modalNoteInput'),
+        frogArea: document.getElementById('db-frog-content-area'),
+        globalProgressText: document.getElementById('globalProgressText'),
+        globalProgressBarFill: document.getElementById('globalProgressBarFill'),
+        valDone: document.getElementById('val-done'),
+        valActive: document.getElementById('val-active'),
+        valLate: document.getElementById('val-late'),
+        valTodo: document.getElementById('val-todo'),
+        calMonWed: document.getElementById('cal-list-mon-wed'),
+        calThu: document.getElementById('cal-list-thu'),
+        calFri: document.getElementById('cal-list-fri'),
+        backupFileInput: document.getElementById('backupFileInput'),
+        colorPickerLav: document.getElementById('colorPickerLav'),
+        colorPickerMellem: document.getElementById('colorPickerMellem'),
+        colorPickerHoj: document.getElementById('colorPickerHoj')
+    };
+
+    function safeParse(value, fallback) {
+        try {
+            return JSON.parse(value) || fallback;
+        } catch (error) {
+            return fallback;
+        }
+    }
+
+    function normalizeTask(task) {
+        return {
+            id: task.id,
+            name: task.name || 'Ny opgave',
+            responsible: Boolean(task.responsible),
+            status: task.status || 'Igangsat',
+            priority: task.priority || 'Mellem',
+            date: task.date || new Date().toISOString().split('T')[0],
+            pct: Number(task.pct) || 0,
+            note: task.note || '',
+            isFrog: Boolean(task.isFrog),
+            plannedDay: task.plannedDay || 'Ikke planlagt',
+            hours: Number(task.hours) || 0
+        };
+    }
+
+    function loadState() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const saved = safeParse(raw, null);
+
+        if (!saved) {
+            state.tasks = defaultTasks.map(normalizeTask);
+            return;
+        }
+
+        state.tasks = (saved.tasks || defaultTasks).map(normalizeTask);
+        state.priorityColors = { ...defaultPriorityColors, ...(saved.priorityColors || {}) };
+        state.dashboardPeriodDays = saved.dashboardPeriodDays || 90;
+        state.hideCalDone = Boolean(saved.hideCalDone);
+        state.theme = saved.theme || 'dark';
+        state.timer.durationSeconds = saved.timerDurationSeconds || 25 * 60;
+        state.timer.timeLeft = saved.timerTimeLeft || state.timer.durationSeconds;
+    }
+
+    function saveState() {
+        try {
+            const payload = {
+                tasks: state.tasks,
+                priorityColors: state.priorityColors,
+                dashboardPeriodDays: state.dashboardPeriodDays,
+                hideCalDone: state.hideCalDone,
+                theme: state.theme,
+                timerDurationSeconds: state.timer.durationSeconds,
+                timerTimeLeft: state.timer.timeLeft
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        } catch (error) {
+            console.warn('Kunne ikke gemme state', error);
+        }
+    }
+
+    function setTheme(themeName) {
+        state.theme = themeName;
+        document.body.setAttribute('data-theme', themeName);
+        refs.themeSelect.value = themeName;
+        saveState();
+    }
+
+    function escapeHtml(value) {
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    function getTaskColor(priority) {
+        return state.priorityColors[priority] || '#3b82f6';
+    }
+
+    function switchPage(page) {
+        const dashboard = document.getElementById('page-dashboard');
+        const tasksPage = document.getElementById('page-tasks');
+        const dbNav = document.getElementById('nav-db');
+        const taskNav = document.getElementById('nav-tasks');
+
+        dashboard.classList.toggle('active', page === 'dashboard');
+        tasksPage.classList.toggle('active', page === 'tasks');
+        dbNav.classList.toggle('active', page === 'dashboard');
+        taskNav.classList.toggle('active', page === 'tasks');
+
+        if (page === 'dashboard') {
+            updateAllGaugesAndStats();
+        }
+    }
+
+    function toggleSettingsMenu() {
+        refs.settingsDropdown.classList.toggle('open');
+    }
+
+    window.addEventListener('click', function (event) {
+        if (!event.target.closest('.settings-wrapper')) {
+            refs.settingsDropdown.classList.remove('open');
+        }
+    });
+
+    function openNoteModal(taskId) {
+        const task = state.tasks.find((item) => item.id === taskId);
+        if (!task) return;
+
+        state.activeEditingTaskId = taskId;
+        refs.modalTaskTitle.textContent = task.name;
+        refs.modalNoteInput.value = task.note || '';
+        refs.noteModal.classList.add('open');
+    }
+
+    function closeNoteModal() {
+        refs.noteModal.classList.remove('open');
+        state.activeEditingTaskId = null;
+    }
+
+    function saveTaskNote() {
+        if (!state.activeEditingTaskId) return;
+
+        const task = state.tasks.find((item) => item.id === state.activeEditingTaskId);
+        if (task) {
+            task.note = refs.modalNoteInput.value;
+            renderTasks();
+            updateAllGaugesAndStats();
+            saveState();
+        }
+
+        closeNoteModal();
+    }
+
+    function updatePriorityColor(level, color) {
+        state.priorityColors[level] = color;
+        renderTasks();
+        updateAllGaugesAndStats();
+        saveState();
+    }
+
+    function setDashboardPeriod(val) {
+        state.dashboardPeriodDays = Number(val);
+        updateAllGaugesAndStats();
+        saveState();
+    }
+
+    function isWithinDashboardPeriod(dateStr) {
+        if (!dateStr) return false;
+
+        const taskDate = new Date(dateStr);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        taskDate.setHours(0, 0, 0, 0);
+
+        const limitDate = new Date(today);
+        limitDate.setDate(today.getDate() + state.dashboardPeriodDays);
+        return taskDate <= limitDate;
+    }
+
+    function toggleHideCalDone() {
+        state.hideCalDone = !state.hideCalDone;
+        updateAllGaugesAndStats();
+        saveState();
+    }
+
+    function clearCalendarDropState() {
+        document.querySelectorAll('.calendar-col').forEach((column) => {
+            column.classList.remove('drag-over');
+        });
+    }
+
+    function handleCalendarDragStart(taskId, event) {
+        state.draggedTaskId = taskId;
+        const draggedCard = event.currentTarget;
+        if (draggedCard) draggedCard.classList.add('dragging');
+        if (event && event.dataTransfer) {
+            event.dataTransfer.effectAllowed = 'move';
+            event.dataTransfer.setData('text/plain', taskId);
+        }
+    }
+
+    function handleCalendarDragEnter(dayGroup, event) {
+        if (!state.draggedTaskId) return;
+        event.preventDefault();
+        event.currentTarget.classList.add('drag-over');
+    }
+
+    function handleCalendarDragLeave(dayGroup, event) {
+        if (!state.draggedTaskId) return;
+        if (!event.currentTarget.contains(event.relatedTarget)) {
+            event.currentTarget.classList.remove('drag-over');
+        }
+    }
+
+    function handleCalendarDragEnd() {
+        state.draggedTaskId = null;
+        clearCalendarDropState();
+        document.querySelectorAll('.cal-card-item').forEach((card) => card.classList.remove('dragging'));
+    }
+
+    function handleCalendarDrop(dayGroup, event) {
+        event.preventDefault();
+        clearCalendarDropState();
+        if (!state.draggedTaskId) return;
+
+        const task = state.tasks.find((item) => item.id === state.draggedTaskId);
+        if (!task) return;
+
+        task.plannedDay = dayGroup;
+        state.draggedTaskId = null;
+        renderTasks();
+        updateAllGaugesAndStats();
+        saveState();
+        document.querySelectorAll('.cal-card-item').forEach((card) => card.classList.remove('dragging'));
+    }
+
+    function displayTimer() {
+        const minutes = Math.floor(state.timer.timeLeft / 60);
+        const seconds = state.timer.timeLeft % 60;
+        refs.timeDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    function updateDuration() {
+        if (state.timer.running) return;
+
+        const mins = Number(refs.minutesInput.value) || 25;
+        state.timer.durationSeconds = mins * 60;
+        state.timer.timeLeft = state.timer.durationSeconds;
+        displayTimer();
+        saveState();
+    }
+
+    function toggleTimer() {
+        const button = refs.startTimerBtn;
+
+        if (state.timer.running) {
+            clearInterval(state.timer.intervalId);
+            state.timer.running = false;
+            button.textContent = 'Start';
+            button.style.background = '#f59e0b';
+            return;
+        }
+
+        state.timer.running = true;
+        button.textContent = 'Pause';
+        button.style.background = '#f43f5e';
+
+        state.timer.intervalId = setInterval(() => {
+            if (state.timer.timeLeft > 0) {
+                state.timer.timeLeft -= 1;
+                displayTimer();
+                saveState();
+            } else {
+                clearInterval(state.timer.intervalId);
+                state.timer.running = false;
+                alert('Tiden er gået!');
+                resetTimer();
+            }
+        }, 1000);
+    }
+
+    function resetTimer() {
+        clearInterval(state.timer.intervalId);
+        state.timer.running = false;
+        state.timer.timeLeft = state.timer.durationSeconds;
+        displayTimer();
+        refs.startTimerBtn.textContent = 'Start';
+        refs.startTimerBtn.style.background = '#f59e0b';
+        saveState();
+    }
+
+    function formatHours(value) {
+        if (!value) return '0h';
+        if (value < 0.1) return `${Math.round(value * 60)}m`;
+        return `${value.toFixed(1)}h`;
+    }
+
+    function toggleTaskTimer(taskId) {
+        if (state.taskTimer.runningTaskId === taskId) {
+            clearInterval(state.taskTimer.intervalId);
+            state.taskTimer.runningTaskId = null;
+            renderTasks();
+            updateAllGaugesAndStats();
+            return;
+        }
+
+        if (state.taskTimer.runningTaskId !== null) {
+            clearInterval(state.taskTimer.intervalId);
+        }
+
+        state.taskTimer.runningTaskId = taskId;
+        renderTasks();
+        updateAllGaugesAndStats();
+
+        state.taskTimer.intervalId = setInterval(() => {
+            const task = state.tasks.find((item) => item.id === state.taskTimer.runningTaskId);
+            if (!task) return;
+
+            task.hours = Number(((task.hours || 0) + 1 / 3600).toFixed(4));
+            const taskTimerDisplay = document.getElementById(`dash-timer-text-${task.id}`);
+            if (taskTimerDisplay) {
+                taskTimerDisplay.textContent = formatHours(task.hours);
+            }
+            saveState();
+        }, 1000);
+    }
+
+    function handleSearch() {
+        state.searchQuery = refs.taskSearchInput.value.toLowerCase();
+        renderTasks();
+    }
+
+    function handleFilterChange() {
+        renderTasks();
+    }
+
+    function kpiClickFilter(type) {
+        state.currentKpiFilter = type;
+        refs.clearKpiBtn.style.display = 'inline-block';
+        switchPage('tasks');
+        renderTasks();
+    }
+
+    function clearKpiFilter() {
+        state.currentKpiFilter = null;
+        refs.clearKpiBtn.style.display = 'none';
+        renderTasks();
+    }
+
+    function updateTaskField(id, field, value) {
+        const task = state.tasks.find((item) => item.id === id);
+        if (!task) return;
+
+        if (field === 'responsible') {
+            task.responsible = value === 'true' || value === true;
+        } else if (field === 'isFrog') {
+            task.isFrog = value === 'true' || value === true;
+        } else if (field === 'pct') {
+            task.pct = Math.max(0, Math.min(100, Number(value) || 0));
+            if (task.pct === 100) task.status = 'Fuldført';
+        } else if (field === 'status') {
+            task.status = value;
+            if (value === 'Fuldført') task.pct = 100;
+        } else {
+            task[field] = value;
+        }
+
+        renderTasks();
+        updateAllGaugesAndStats();
+        saveState();
+    }
+
+    function addNewTask() {
+        const nextId = `t${state.tasks.length + 1}`;
+        state.tasks.unshift({
+            id: nextId,
+            name: 'Ny opgave',
+            responsible: true,
+            status: 'Igangsat',
+            priority: 'Mellem',
+            date: new Date().toISOString().split('T')[0],
+            pct: 0,
+            note: '',
+            isFrog: false,
+            plannedDay: 'Ikke planlagt',
+            hours: 0
+        });
+        renderTasks();
+        updateAllGaugesAndStats();
+        saveState();
+    }
+
+    function getVisibleTasks() {
+        const respFilter = refs.responsibleFilter.value;
+        const visible = state.tasks.filter((task) => {
+            if (respFilter === 'mine' && !task.responsible) return false;
+            if (respFilter === 'not_mine' && task.responsible) return false;
+            if (state.searchQuery && !task.name.toLowerCase().includes(state.searchQuery)) return false;
+            if (state.currentKpiFilter) {
+                if (!isWithinDashboardPeriod(task.date)) return false;
+                if (state.currentKpiFilter === 'Kritiske') {
+                    if (task.status === 'Fuldført') return false;
+                    const diffDays = (new Date(task.date) - new Date()) / (1000 * 60 * 60 * 24);
+                    if (diffDays > 7) return false;
+                } else if (task.status !== state.currentKpiFilter) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+        return visible;
+    }
+
+    function renderTasks() {
+        refs.taskTableBody.innerHTML = '';
+        const visibleTasks = getVisibleTasks();
+
+        visibleTasks.forEach((task) => {
+            const prioColor = getTaskColor(task.priority);
+            const hasNote = Boolean(task.note && task.note.trim() !== '');
+
+            refs.taskTableBody.insertAdjacentHTML('beforeend', `
+                <tr>
+                    <td style="text-align:center;">
+                        <button class="responsible-btn" title="Klik for at skifte ansvar" onclick="updateTaskField('${task.id}', 'responsible', ${!task.responsible})">
+                            ${task.responsible ? '✅' : '❌'}
+                        </button>
+                    </td>
+                    <td style="text-align:center;">
+                        <button class="btn-star ${task.isFrog ? 'starred' : ''}" onclick="updateTaskField('${task.id}', 'isFrog', ${!task.isFrog})"><i class="fa-solid fa-star"></i></button>
+                    </td>
+                    <td>
+                        <div class="task-name-click" onclick="openNoteModal('${task.id}')">
+                            <input type="text" class="task-name-field" value="${escapeHtml(task.name)}" onchange="updateTaskField('${task.id}', 'name', this.value)" onclick="event.stopPropagation()">
+                            ${hasNote ? '<i class="fa-solid fa-comment" style="color:var(--text-muted); font-size:0.8rem;" title="Har kommentar"></i>' : ''}
+                        </div>
+                    </td>
+                    <td>
+                        <select class="day-select" onchange="updateTaskField('${task.id}', 'plannedDay', this.value)">
+                            <option value="Ikke planlagt" ${task.plannedDay === 'Ikke planlagt' ? 'selected' : ''}>Ikke planlagt</option>
+                            <option value="Mandag-onsdag" ${task.plannedDay === 'Mandag-onsdag' ? 'selected' : ''}>Man-Ons</option>
+                            <option value="Torsdag" ${task.plannedDay === 'Torsdag' ? 'selected' : ''}>Torsdag</option>
+                            <option value="Fredag" ${task.plannedDay === 'Fredag' ? 'selected' : ''}>Fredag</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="date" value="${task.date}" onchange="updateTaskField('${task.id}', 'date', this.value)">
+                    </td>
+                    <td>
+                        <select class="priority-select" style="color:${prioColor}; border-color:${prioColor};" onchange="updateTaskField('${task.id}', 'priority', this.value)">
+                            <option value="Lav" ${task.priority === 'Lav' ? 'selected' : ''}>Lav</option>
+                            <option value="Mellem" ${task.priority === 'Mellem' ? 'selected' : ''}>Mellem</option>
+                            <option value="Høj" ${task.priority === 'Høj' ? 'selected' : ''}>Høj</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="status-select" onchange="updateTaskField('${task.id}', 'status', this.value)">
+                            <option value="Igangsat" ${task.status === 'Igangsat' ? 'selected' : ''}>Igangsat</option>
+                            <option value="Venter" ${task.status === 'Venter' ? 'selected' : ''}>Venter</option>
+                            <option value="Fuldført" ${task.status === 'Fuldført' ? 'selected' : ''}>Fuldført</option>
+                        </select>
+                    </td>
+                    <td>
+                        <div class="task-progress-wrap">
+                            <input type="number" value="${task.pct}" style="width:30px; text-align:center;" min="0" max="100" onchange="updateTaskField('${task.id}', 'pct', this.value)">
+                            <span>%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:${task.pct}%; background:${prioColor};"></div></div>
+                    </td>
+                    <td style="text-align:center;">
+                        <button class="btn-task-timer ${state.taskTimer.runningTaskId === task.id ? 'running' : ''}" onclick="toggleTaskTimer('${task.id}')">
+                            <i class="fa-solid ${state.taskTimer.runningTaskId === task.id ? 'fa-stopwatch' : 'fa-play'}"></i>
+                        </button>
+                    </td>
+                </tr>
+            `);
+        });
+    }
+
+    function updateAllGaugesAndStats() {
+        const zoneTasks = state.tasks.filter((task) => isWithinDashboardPeriod(task.date) && task.responsible);
+        const total = zoneTasks.length;
+        const done = zoneTasks.filter((task) => task.status === 'Fuldført').length;
+        const active = zoneTasks.filter((task) => task.status === 'Igangsat').length;
+        const todo = zoneTasks.filter((task) => task.status === 'Venter').length;
+        const late = zoneTasks.filter((task) => task.status !== 'Fuldført' && ((new Date(task.date) - new Date()) / (1000 * 60 * 60 * 24)) <= 7).length;
+
+        refs.valDone.textContent = done;
+        refs.valActive.textContent = active;
+        refs.valLate.textContent = late;
+        refs.valTodo.textContent = todo;
+
+        const totalPct = zoneTasks.reduce((acc, item) => acc + (item.pct || 0), 0);
+        const avgPct = total > 0 ? Math.round(totalPct / total) : 0;
+        refs.globalProgressText.textContent = `${avgPct}%`;
+        refs.globalProgressBarFill.style.width = `${avgPct}%`;
+
+        const frogs = zoneTasks.filter((task) => task.isFrog && task.status !== 'Fuldført');
+        refs.frogArea.innerHTML = frogs.length === 0 ? '<div class="empty-state">Ingen aktive fokusopgaver i zonen.</div>' : '';
+
+        frogs.forEach((frog) => {
+            const itemColor = getTaskColor(frog.priority);
+            const hasNote = frog.note && frog.note.trim() !== '';
+            refs.frogArea.insertAdjacentHTML('beforeend', `
+                <div class="db-frog-item" onclick="openNoteModal('${frog.id}')">
+                    <div style="flex-grow:1;">
+                        <div class="db-frog-item-title">
+                            <strong>${escapeHtml(frog.name)} ${hasNote ? '<i class="fa-solid fa-comment" style="font-size:0.8rem; color:var(--text-muted);"></i>' : ''}</strong>
+                        </div>
+                        <div class="db-frog-meta">
+                            Planlagt Dato: ${frog.date} | Prioritet: <span style="color:${itemColor}; font-weight:bold;">${frog.priority}</span> | Fremdrift: ${frog.pct}%
+                        </div>
+                        <div class="db-frog-progress">
+                            <div class="db-frog-progress-fill" style="width:${frog.pct}%; background:${itemColor};"></div>
+                        </div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:12px;" onclick="event.stopPropagation()">
+                        <button class="btn-task-timer ${state.taskTimer.runningTaskId === frog.id ? 'running' : ''}" onclick="toggleTaskTimer('${frog.id}')">
+                            <i class="fa-solid ${state.taskTimer.runningTaskId === frog.id ? 'fa-stopwatch' : 'fa-play'}" style="font-size:1.1rem;"></i>
+                        </button>
+                        <span id="dash-timer-text-${frog.id}" style="font-size:0.9rem; font-weight:bold;">${formatHours(frog.hours)}</span>
+                    </div>
+                </div>
+            `);
+        });
+
+        refs.calMonWed.innerHTML = '';
+        refs.calThu.innerHTML = '';
+        refs.calFri.innerHTML = '';
+
+        zoneTasks.forEach((task) => {
+            if (state.hideCalDone && task.status === 'Fuldført') return;
+
+            const itemColor = getTaskColor(task.priority);
+            const hasNote = task.note && task.note.trim() !== '';
+            const isDone = task.status === 'Fuldført';
+            const itemHtml = `
+                <div class="cal-card-item ${isDone ? 'status-done' : ''}" draggable="true" style="border-left-color:${itemColor};" onclick="openNoteModal('${task.id}')" ondragstart="handleCalendarDragStart('${task.id}', event)" ondragend="handleCalendarDragEnd()" ondragover="event.preventDefault()">
+                    <div class="cal-card-title">
+                        ${escapeHtml(task.name)} ${hasNote ? '<i class="fa-solid fa-comment" style="font-size:0.75rem; color:var(--text-muted);"></i>' : ''}
+                    </div>
+                    <div class="cal-card-footer">
+                        <span style="font-weight:bold; color:${itemColor};">${task.pct}%</span>
+                        <div class="cal-controls" onclick="event.stopPropagation()">
+                            <select class="cal-quick-select" style="color:${itemColor}; border-color:${itemColor};" onchange="updateTaskField('${task.id}', 'priority', this.value)">
+                                <option value="Lav" ${task.priority === 'Lav' ? 'selected' : ''}>Lav</option>
+                                <option value="Mellem" ${task.priority === 'Mellem' ? 'selected' : ''}>Mellem</option>
+                                <option value="Høj" ${task.priority === 'Høj' ? 'selected' : ''}>Høj</option>
+                            </select>
+                            <select class="cal-quick-select" onchange="updateTaskField('${task.id}', 'plannedDay', this.value)">
+                                <option value="Mandag-onsdag" ${task.plannedDay === 'Mandag-onsdag' ? 'selected' : ''}>Man-Ons</option>
+                                <option value="Torsdag" ${task.plannedDay === 'Torsdag' ? 'selected' : ''}>Torsdag</option>
+                                <option value="Fredag" ${task.plannedDay === 'Fredag' ? 'selected' : ''}>Fredag</option>
+                                <option value="Ikke planlagt" ${task.plannedDay === 'Ikke planlagt' ? 'selected' : ''}>Fjern</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            if (task.plannedDay === 'Mandag-onsdag') refs.calMonWed.insertAdjacentHTML('beforeend', itemHtml);
+            else if (task.plannedDay === 'Torsdag') refs.calThu.insertAdjacentHTML('beforeend', itemHtml);
+            else if (task.plannedDay === 'Fredag') refs.calFri.insertAdjacentHTML('beforeend', itemHtml);
+        });
+
+        if (!refs.calMonWed.innerHTML) refs.calMonWed.innerHTML = '<div class="empty-state">Ingen opgaver</div>';
+        if (!refs.calThu.innerHTML) refs.calThu.innerHTML = '<div class="empty-state">Ingen opgaver</div>';
+        if (!refs.calFri.innerHTML) refs.calFri.innerHTML = '<div class="empty-state">Ingen opgaver</div>';
+    }
+
+    function exportDataToFile() {
+        const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(state.tasks, null, 4));
+        const link = document.createElement('a');
+        link.href = dataStr;
+        link.download = 'opgaver_backup.json';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    }
+
+    function triggerImportFile() {
+        refs.backupFileInput.click();
+    }
+
+    function importDataFromFile(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            try {
+                const parsed = JSON.parse(e.target.result);
+                state.tasks = (parsed || []).map(normalizeTask);
+                renderTasks();
+                updateAllGaugesAndStats();
+                saveState();
+            } catch (error) {
+                alert('Fejl ved indlæsning af filen.');
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    function init() {
+        loadState();
+        refs.periodSelect.value = String(state.dashboardPeriodDays);
+        refs.minutesInput.value = String(Math.round(state.timer.durationSeconds / 60));
+        refs.themeSelect.value = state.theme;
+        refs.colorPickerLav.value = state.priorityColors.Lav;
+        refs.colorPickerMellem.value = state.priorityColors.Mellem;
+        refs.colorPickerHoj.value = state.priorityColors.Høj;
+        setTheme(state.theme);
+        displayTimer();
+        renderTasks();
+        updateAllGaugesAndStats();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+</script>
+Write a reply
+0 commit comments
+Comments
+0
+ (0)
+Comment
+You're not receiving notifications from this thread.
+
+Copied!
