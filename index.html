@@ -674,6 +674,7 @@
                 </div>
 
                 <div class="topbar-right">
+                    <button class="btn-secondary" style="border-color: var(--accent); color: var(--text-main);" onclick="openQuickTaskModal()"><i class="fa-solid fa-bolt" style="color: var(--star-color);"></i> Hurtig opgave</button>
                     <button class="btn-primary" onclick="addNewTask()"><i class="fa-solid fa-plus"></i> Ny opgave</button>
                     
                     <div class="settings-wrapper">
@@ -720,72 +721,45 @@
                     </div>
                 </div>
 
-                <h3 style="margin-top:20px; font-size:1rem; color:var(--text-muted);"><i class="fa-solid fa-calendar-week"></i> UGEPLAN</h3>
-                <div class="calendar-grid">
-                    <div class="calendar-col" ondragover="event.preventDefault()" ondrop="handleCalDrop('Mandag-onsdag', event)">
-                        <div class="calendar-col-title">Mandag - Onsdag</div>
-                        <div id="cal-list-mon-wed" style="display:flex; flex-direction:column; gap:10px;"></div>
-                    </div>
-                    <div class="calendar-col" ondragover="event.preventDefault()" ondrop="handleCalDrop('Torsdag', event)">
-                        <div class="calendar-col-title">Torsdag</div>
-                        <div id="cal-list-thu" style="display:flex; flex-direction:column; gap:10px;"></div>
-                    </div>
-                    <div class="calendar-col" ondragover="event.preventDefault()" ondrop="handleCalDrop('Fredag', event)">
-                        <div class="calendar-col-title">Fredag</div>
-                        <div id="cal-list-fri" style="display:flex; flex-direction:column; gap:10px;"></div>
-                    </div>
+    <!-- HURTIG OPGAVE MODAL -->
+    <div class="modal-overlay" id="quickTaskModal">
+        <div class="modal-card" style="max-width: 480px;">
+            <button class="modal-close-red" onclick="closeQuickTaskModal()"><i class="fa-solid fa-xmark"></i></button>
+            
+            <h3 style="padding-right:40px; display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-bolt" style="color: var(--star-color);"></i> Opret hurtig opgave
+            </h3>
+            
+            <div class="form-group full-width" style="margin-top:10px;">
+                <label>Opgavebeskrivelse</label>
+                <input type="text" id="quickTaskNameInput" placeholder="Hvad skal gøres? (tryk Enter for at oprette)..." onkeydown="if(event.key==='Enter'){saveQuickTask();}">
+            </div>
+
+            <div class="form-grid" style="grid-template-columns: 1fr 1fr; margin-top: 4px;">
+                <div class="form-group">
+                    <label>Planlagt dag</label>
+                    <select id="quickTaskDayInput">
+                        <option value="Ikke planlagt" selected>Ikke planlagt</option>
+                        <option value="Mandag-onsdag">Mandag - Onsdag</option>
+                        <option value="Torsdag">Torsdag</option>
+                        <option value="Fredag">Fredag</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Prioritet</label>
+                    <select id="quickTaskPriorityInput">
+                        <option value="Lav">Lav</option>
+                        <option value="Mellem" selected>Mellem</option>
+                        <option value="Høj">Høj</option>
+                    </select>
                 </div>
             </div>
 
-            <div id="page-board" class="page">
-                <div class="kanban-board">
-                    <div class="kanban-col" ondragover="event.preventDefault()" ondrop="handleKanbanDrop('Venter', event)">
-                        <div class="kanban-col-header">Venter <span id="cnt-todo">0</span></div>
-                        <div id="kanban-list-todo" style="display:flex; flex-direction:column; gap:10px;"></div>
-                    </div>
-                    <div class="kanban-col" ondragover="event.preventDefault()" ondrop="handleKanbanDrop('Igangsat', event)">
-                        <div class="kanban-col-header">I gang <span id="cnt-active">0</span></div>
-                        <div id="kanban-list-active" style="display:flex; flex-direction:column; gap:10px;"></div>
-                    </div>
-                    <div class="kanban-col" ondragover="event.preventDefault()" ondrop="handleKanbanDrop('Fuldført', event)">
-                        <div class="kanban-col-header">Fuldført <span id="cnt-done">0</span></div>
-                        <div id="kanban-list-done" style="display:flex; flex-direction:column; gap:10px;"></div>
-                    </div>
-                </div>
+            <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px;">
+                <button class="btn-secondary" onclick="closeQuickTaskModal()">Annuller</button>
+                <button class="btn-primary" onclick="saveQuickTask()"><i class="fa-solid fa-bolt"></i> Opret nu</button>
             </div>
-
-            <div id="page-tasks" class="page">
-                <div id="filterStatusBar" class="filter-status-bar">
-                    <span>Viser filter: <strong id="filterStatusText"></strong></span>
-                    <button class="btn-secondary" onclick="clearGaugeFilter()" style="padding:4px 8px; font-size:0.75rem;"><i class="fa-solid fa-xmark"></i> Vis alle opgaver</button>
-                </div>
-
-                <div style="margin-bottom:12px;">
-                    <input type="text" id="taskSearchInput" placeholder="Søg i opgaver..." oninput="render()" style="width:300px;">
-                </div>
-                <div class="task-table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="width:50px; text-align:center;">Ansvar</th>
-                                <th style="width:40px; text-align:center;">Fokus</th>
-                                <th>Opgavebeskrivelse</th>
-                                <th style="width:130px;">Planlagt dag</th>
-                                <th class="sortable" style="width:120px;" onclick="sortTable('date')">Dato <span id="sort-icon-date"></span></th>
-                                <th class="sortable" style="width:100px;" onclick="sortTable('priority')">Prioritet <span id="sort-icon-priority"></span></th>
-                                <th class="sortable" style="width:110px;" onclick="sortTable('status')">Status <span id="sort-icon-status"></span></th>
-                                <th class="sortable" style="width:160px;" onclick="sortTable('pct')">Fremdrift <span id="sort-icon-pct"></span></th>
-                            </tr>
-                        </thead>
-                        <tbody id="taskTableBody"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <footer class="rights-footer">
-                All rights reserved Lasse Gamborg
-            </footer>
-        </main>
+        </div>
     </div>
 
     <div class="modal-overlay" id="noteModal">
@@ -884,434 +858,49 @@
 
     <script>
         const STORAGE_KEY = 'taskmaster-clean-state-v2';
-
-        let state = {
-            tasks: [],
-            activeEditingTaskId: null,
-            draggedTaskId: null,
-            dashboardPeriodDays: 90,
-            theme: 'github',
-            activeGaugeFilter: null,
-            sortColumn: null,
-            sortDirection: 'asc'
-        };
-
-        function formatDateDanish(dateStr) {
-            if (!dateStr) return '';
-            const parts = dateStr.split('-');
-            if (parts.length === 3) {
-                return `${parts[2]}-${parts[1]}-${parts[0]}`;
-            }
-            return dateStr;
+        function openQuickTaskModal() {
+            document.getElementById('quickTaskNameInput').value = '';
+            document.getElementById('quickTaskDayInput').value = 'Ikke planlagt';
+            document.getElementById('quickTaskPriorityInput').value = 'Mellem';
+            document.getElementById('quickTaskModal').classList.add('open');
+            setTimeout(() => {
+                document.getElementById('quickTaskNameInput').focus();
+            }, 50);
         }
 
-        function loadState() {
-            let raw = localStorage.getItem(STORAGE_KEY);
-            
-            if (raw) {
-                try {
-                    state.tasks = JSON.parse(raw);
-                } catch(e) {
-                    state.tasks = [];
-                }
-            } else {
-                state.tasks = [];
-            }
-            saveState();
-
-            const savedTheme = localStorage.getItem('workflowdash-theme') || 'github';
-            changeTheme(savedTheme);
+        function closeQuickTaskModal() {
+            document.getElementById('quickTaskModal').classList.remove('open');
         }
 
-        function toggleFullscreen() {
-            document.getElementById('settingsDropdown').classList.remove('open');
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    alert(`Fejl ved aktivering af fuldskærm: ${err.message}`);
-                });
-            } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
-            }
-        }
-
-        function deleteAllTasks() {
-            document.getElementById('settingsDropdown').classList.remove('open');
-            if (confirm('ER DU SIKKER?\n\nDette vil permanent slette ALLE opgaver i listen. Handlingen kan ikke fortrydes!')) {
-                state.tasks = [];
-                saveState();
-                render();
-                alert('Alle opgaver er nu slettet.');
-            }
-        }
-
-        function saveState() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(state.tasks));
-        }
-
-        function changeTheme(themeName) {
-            state.theme = themeName;
-            document.body.setAttribute('data-theme', themeName);
-            document.getElementById('themeSelect').value = themeName;
-            localStorage.setItem('workflowdash-theme', themeName);
-        }
-
-        function switchPage(page) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(`page-${page}`).classList.add('active');
-            document.getElementById(`nav-${page === 'board' ? 'board' : page === 'dashboard' ? 'db' : 'tasks'}`).classList.add('active');
-            render();
-        }
-
-        function filterByGauge(statusType) {
-            state.activeGaugeFilter = statusType;
-            switchPage('tasks');
-        }
-
-        function clearGaugeFilter() {
-            state.activeGaugeFilter = null;
-            render();
-        }
-
-        function sortTable(column) {
-            if (state.sortColumn === column) {
-                state.sortDirection = state.sortDirection === 'asc' ? 'desc' : 'asc';
-            } else {
-                state.sortColumn = column;
-                state.sortDirection = 'asc';
-            }
-            renderTable();
-        }
-
-        function toggleSettingsMenu() {
-            document.getElementById('settingsDropdown').classList.toggle('open');
-        }
-
-        window.addEventListener('click', (e) => {
-            if (!e.target.closest('.settings-wrapper')) {
-                document.getElementById('settingsDropdown').classList.remove('open');
-            }
-        });
-
-        function setDashboardPeriod(val) {
-            state.dashboardPeriodDays = Number(val);
-            render();
-        }
-
-        function updateTaskField(taskId, field, value) {
-            const task = state.tasks.find(t => t.id === taskId);
-            if (!task) return;
-
-            if (field === 'responsible' || field === 'isFrog') {
-                task[field] = value;
-            } else if (field === 'pct') {
-                let numVal = Math.min(100, Math.max(0, Number(value) || 0));
-                task.pct = numVal;
-                if (numVal === 100) task.status = 'Fuldført';
-                else if (numVal > 0 && task.status === 'Venter') task.status = 'Igangsat';
-            } else if (field === 'status') {
-                task.status = value;
-                if (value === 'Fuldført') task.pct = 100;
-            } else {
-                task[field] = value;
+        function saveQuickTask() {
+            const name = document.getElementById('quickTaskNameInput').value.trim();
+            if (!name) {
+                alert('Indtast venligst en opgavebeskrivelse.');
+                return;
             }
 
+            const day = document.getElementById('quickTaskDayInput').value;
+            const priority = document.getElementById('quickTaskPriorityInput').value;
+
+            const newTask = {
+                id: 't' + Date.now(),
+                name: name,
+                responsible: true,
+                status: 'Igangsat',
+                priority: priority,
+                date: new Date().toISOString().split('T')[0],
+                pct: 0,
+                comments: [],
+                isFrog: false,
+                plannedDay: day,
+                tags: [],
+                subtasks: []
+            };
+
+            state.tasks.unshift(newTask);
             saveState();
             render();
-        }
-
-        /* STILREN RENDER AF ENKELTINLINE FELTER */
-        function triggerInlineEdit(taskId, type) {
-            const task = state.tasks.find(t => t.id === taskId);
-            if (!task) return;
-
-            const cell = document.getElementById(`cell-${type}-${taskId}`);
-            if (!cell) return;
-
-            if (type === 'day') {
-                cell.innerHTML = `
-                    <select class="inline-edit-input" onchange="updateTaskField('${taskId}', 'plannedDay', this.value)" onblur="renderTable()">
-                        <option value="Ikke planlagt" ${task.plannedDay === 'Ikke planlagt' ? 'selected' : ''}>Ikke planlagt</option>
-                        <option value="Mandag-onsdag" ${task.plannedDay === 'Mandag-onsdag' ? 'selected' : ''}>Mandag-onsdag</option>
-                        <option value="Torsdag" ${task.plannedDay === 'Torsdag' ? 'selected' : ''}>Torsdag</option>
-                        <option value="Fredag" ${task.plannedDay === 'Fredag' ? 'selected' : ''}>Fredag</option>
-                    </select>
-                `;
-            } else if (type === 'date') {
-                cell.innerHTML = `
-                    <input type="date" class="inline-edit-input" value="${task.date}" onchange="updateTaskField('${taskId}', 'date', this.value)" onblur="renderTable()">
-                `;
-            } else if (type === 'prio') {
-                cell.innerHTML = `
-                    <select class="inline-edit-input" onchange="updateTaskField('${taskId}', 'priority', this.value)" onblur="renderTable()">
-                        <option value="Lav" ${task.priority === 'Lav' ? 'selected' : ''}>Lav</option>
-                        <option value="Mellem" ${task.priority === 'Mellem' ? 'selected' : ''}>Mellem</option>
-                        <option value="Høj" ${task.priority === 'Høj' ? 'selected' : ''}>Høj</option>
-                    </select>
-                `;
-            } else if (type === 'status') {
-                cell.innerHTML = `
-                    <select class="inline-edit-input" onchange="updateTaskField('${taskId}', 'status', this.value)" onblur="renderTable()">
-                        <option value="Venter" ${task.status === 'Venter' ? 'selected' : ''}>Venter</option>
-                        <option value="Igangsat" ${task.status === 'Igangsat' ? 'selected' : ''}>Igangsat</option>
-                        <option value="Fuldført" ${task.status === 'Fuldført' ? 'selected' : ''}>Fuldført</option>
-                    </select>
-                `;
-            } else if (type === 'pct') {
-                cell.innerHTML = `
-                    <input type="number" class="inline-edit-input" style="width:60px;" min="0" max="100" value="${task.pct}" onchange="updateTaskField('${taskId}', 'pct', this.value)" onblur="renderTable()"> %
-                `;
-            }
-
-            const activeElem = cell.querySelector('input, select');
-            if (activeElem) {
-                activeElem.focus();
-                if (activeElem.showPicker && activeElem.type === 'date') {
-                    try { activeElem.showPicker(); } catch(e) {}
-                }
-            }
-        }
-
-        function getFilteredTasks() {
-            const respFilter = document.getElementById('responsibleFilter').value;
-            const search = document.getElementById('taskSearchInput') ? document.getElementById('taskSearchInput').value.toLowerCase() : '';
-
-            let list = state.tasks.filter(t => {
-                if (respFilter === 'mine' && !t.responsible) return false;
-                if (respFilter === 'not_mine' && t.responsible) return false;
-                if (search && !t.name.toLowerCase().includes(search)) return false;
-
-                if (state.activeGaugeFilter) {
-                    if (state.activeGaugeFilter === 'Kritiske') {
-                        if (t.status === 'Fuldført' || new Date(t.date) >= new Date()) return false;
-                    } else {
-                        if (t.status !== state.activeGaugeFilter) return false;
-                    }
-                }
-
-                return true;
-            });
-
-            if (state.sortColumn) {
-                const prioOrder = { 'Høj': 3, 'Mellem': 2, 'Lav': 1 };
-                const statusOrder = { 'Venter': 1, 'Igangsat': 2, 'Fuldført': 3 };
-
-                list.sort((a, b) => {
-                    let valA = a[state.sortColumn];
-                    let valB = b[state.sortColumn];
-
-                    if (state.sortColumn === 'priority') {
-                        valA = prioOrder[valA] || 0;
-                        valB = prioOrder[valB] || 0;
-                    } else if (state.sortColumn === 'status') {
-                        valA = statusOrder[valA] || 0;
-                        valB = statusOrder[valB] || 0;
-                    } else if (state.sortColumn === 'pct') {
-                        valA = Number(valA) || 0;
-                        valB = Number(valB) || 0;
-                    }
-
-                    if (valA < valB) return state.sortDirection === 'asc' ? -1 : 1;
-                    if (valA > valB) return state.sortDirection === 'asc' ? 1 : -1;
-                    return 0;
-                });
-            }
-
-            return list;
-        }
-
-        function render() {
-            renderDashboard();
-            renderCalendar();
-            renderKanban();
-            renderTable();
-        }
-
-        function renderDashboard() {
-            const tasks = state.tasks.filter(t => {
-                const respFilter = document.getElementById('responsibleFilter').value;
-                if (respFilter === 'mine' && !t.responsible) return false;
-                if (respFilter === 'not_mine' && t.responsible) return false;
-                return true;
-            });
-
-            document.getElementById('val-done').textContent = tasks.filter(t => t.status === 'Fuldført').length;
-            document.getElementById('val-active').textContent = tasks.filter(t => t.status === 'Igangsat').length;
-            document.getElementById('val-todo').textContent = tasks.filter(t => t.status === 'Venter').length;
-            document.getElementById('val-late').textContent = tasks.filter(t => t.status !== 'Fuldført' && new Date(t.date) < new Date()).length;
-        }
-
-        function createProgressBarHtml(pct) {
-            const isDone = pct === 100;
-            return `
-                <div class="progress-wrapper">
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill ${isDone ? 'done' : ''}" style="width: ${pct}%;"></div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderCalendar() {
-            const listMonWed = document.getElementById('cal-list-mon-wed');
-            const listThu = document.getElementById('cal-list-thu');
-            const listFri = document.getElementById('cal-list-fri');
-
-            listMonWed.innerHTML = ''; listThu.innerHTML = ''; listFri.innerHTML = '';
-
-            getFilteredTasks().forEach(task => {
-                const card = `
-                    <div class="cal-card-item" draggable="true" ondragstart="state.draggedTaskId='${task.id}'" onclick="openNoteModal('${task.id}')">
-                        <div style="font-weight:600;">${task.name}</div>
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            ${createProgressBarHtml(task.pct)}
-                            <span style="font-weight:700; font-size:0.8rem;">${task.pct}%</span>
-                        </div>
-                        <div style="font-size:0.75rem; color:var(--text-muted);">Dato: ${formatDateDanish(task.date)}</div>
-                    </div>
-                `;
-                if (task.plannedDay === 'Mandag-onsdag') listMonWed.insertAdjacentHTML('beforeend', card);
-                else if (task.plannedDay === 'Torsdag') listThu.insertAdjacentHTML('beforeend', card);
-                else if (task.plannedDay === 'Fredag') listFri.insertAdjacentHTML('beforeend', card);
-            });
-        }
-
-        function handleCalDrop(dayGroup, event) {
-            event.preventDefault();
-            const task = state.tasks.find(t => t.id === state.draggedTaskId);
-            if (task) {
-                task.plannedDay = dayGroup;
-                saveState();
-                render();
-            }
-        }
-
-        function renderKanban() {
-            const listTodo = document.getElementById('kanban-list-todo');
-            const listActive = document.getElementById('kanban-list-active');
-            const listDone = document.getElementById('kanban-list-done');
-
-            listTodo.innerHTML = ''; listActive.innerHTML = ''; listDone.innerHTML = '';
-
-            getFilteredTasks().forEach(task => {
-                const tagsHtml = (task.tags || []).map(tag => `<span class="tag-badge">#${tag}</span>`).join('');
-                const card = `
-                    <div class="kanban-card" draggable="true" ondragstart="state.draggedTaskId='${task.id}'" onclick="openNoteModal('${task.id}')">
-                        <div style="font-weight:600;">${task.name}</div>
-                        <div>${tagsHtml}</div>
-                        <div style="display:flex; align-items:center; gap:8px;">
-                            ${createProgressBarHtml(task.pct)}
-                            <span style="font-weight:700; font-size:0.8rem;">${task.pct}%</span>
-                        </div>
-                        <div style="font-size:0.75rem; color:var(--text-muted);"><i class="fa-regular fa-calendar"></i> ${formatDateDanish(task.date)}</div>
-                    </div>
-                `;
-                if (task.status === 'Venter') listTodo.insertAdjacentHTML('beforeend', card);
-                else if (task.status === 'Igangsat') listActive.insertAdjacentHTML('beforeend', card);
-                else if (task.status === 'Fuldført') listDone.insertAdjacentHTML('beforeend', card);
-            });
-
-            const tasks = getFilteredTasks();
-            document.getElementById('cnt-todo').textContent = tasks.filter(t => t.status === 'Venter').length;
-            document.getElementById('cnt-active').textContent = tasks.filter(t => t.status === 'Igangsat').length;
-            document.getElementById('cnt-done').textContent = tasks.filter(t => t.status === 'Fuldført').length;
-        }
-
-        function handleKanbanDrop(newStatus, event) {
-            event.preventDefault();
-            const task = state.tasks.find(t => t.id === state.draggedTaskId);
-            if (task) {
-                task.status = newStatus;
-                if (newStatus === 'Fuldført') task.pct = 100;
-                saveState();
-                render();
-            }
-        }
-
-        function renderTable() {
-            const tbody = document.getElementById('taskTableBody');
-            tbody.innerHTML = '';
-
-            const filterBar = document.getElementById('filterStatusBar');
-            const filterText = document.getElementById('filterStatusText');
-
-            if (state.activeGaugeFilter) {
-                filterBar.classList.add('active');
-                filterText.textContent = state.activeGaugeFilter;
-            } else {
-                filterBar.classList.remove('active');
-            }
-
-            ['date', 'priority', 'status', 'pct'].forEach(col => {
-                const iconSpan = document.getElementById(`sort-icon-${col}`);
-                if (iconSpan) {
-                    if (state.sortColumn === col) {
-                        iconSpan.textContent = state.sortDirection === 'asc' ? ' ▲' : ' ▼';
-                    } else {
-                        iconSpan.textContent = '';
-                    }
-                }
-            });
-
-            getFilteredTasks().forEach(task => {
-                const commentCount = (task.comments || []).length;
-                
-                tbody.insertAdjacentHTML('beforeend', `
-                    <tr class="task-row">
-                        <td style="text-align:center;">
-                            <span class="clickable-toggle" onclick="updateTaskField('${task.id}', 'responsible', ${!task.responsible})">
-                                ${task.responsible ? '✅' : '❌'}
-                            </span>
-                        </td>
-                        <td style="text-align:center;">
-                            <span class="clickable-toggle" onclick="updateTaskField('${task.id}', 'isFrog', ${!task.isFrog})">
-                                ${task.isFrog ? '⭐' : '☆'}
-                            </span>
-                        </td>
-                        <td class="task-name-cell" onclick="openNoteModal('${task.id}')">
-                            ${task.name} ${commentCount > 0 ? `<span style="font-size:0.75rem; color:var(--text-muted); margin-left:6px;"><i class="fa-solid fa-comment"></i> ${commentCount}</span>` : ''}
-                        </td>
-                        <td>
-                            <div id="cell-day-${task.id}">
-                                <span class="clean-clickable-cell" onclick="triggerInlineEdit('${task.id}', 'day')">
-                                    ${task.plannedDay}
-                                </span>
-                            </div>
-                        </td>
-                        <td>
-                            <div id="cell-date-${task.id}">
-                                <span class="clean-clickable-cell" onclick="triggerInlineEdit('${task.id}', 'date')">
-                                    ${formatDateDanish(task.date)}
-                                </span>
-                            </div>
-                        </td>
-                        <td>
-                            <div id="cell-prio-${task.id}">
-                                <span class="prio-badge prio-${task.priority}" onclick="triggerInlineEdit('${task.id}', 'prio')">
-                                    ${task.priority}
-                                </span>
-                            </div>
-                        </td>
-                        <td>
-                            <div id="cell-status-${task.id}">
-                                <span class="status-badge" onclick="triggerInlineEdit('${task.id}', 'status')">
-                                    ${task.status}
-                                </span>
-                            </div>
-                        </td>
-                        <td>
-                            <div style="display:flex; align-items:center; gap:8px;" id="cell-pct-${task.id}">
-                                ${createProgressBarHtml(task.pct)}
-                                <span class="clean-clickable-cell" style="font-weight:700; min-width:38px; text-align:right;" onclick="triggerInlineEdit('${task.id}', 'pct')">
-                                    ${task.pct}%
-                                </span>
-                            </div>
-                        </td>
-                    </tr>
-                `);
-            });
+            closeQuickTaskModal();
         }
 
         function addNewTask() {
