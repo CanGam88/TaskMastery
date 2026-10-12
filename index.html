@@ -261,6 +261,44 @@
 
         .gauge-val { font-size: 1.6rem; font-weight: 800; }
 
+        /* DAGENS FOKUS / FROG BOX */
+        .focus-box {
+            background: var(--sidebar-bg);
+            border: 1px solid var(--star-color);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .focus-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--star-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+        }
+        .focus-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .focus-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.15s;
+        }
+        .focus-card:hover { transform: translateY(-2px); border-color: var(--star-color); }
+
         /* Calendar Grid */
         .calendar-grid {
             display: grid;
@@ -290,6 +328,16 @@
         }
 
         /* Kanban Board */
+        .kanban-header-bar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 12px;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
         .kanban-board {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -347,7 +395,24 @@
             color: var(--text-main);
             border: 1px solid var(--border-color);
             margin-right: 4px;
+            cursor: pointer;
         }
+        .tag-badge:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* DEADLINE BADGES */
+        .deadline-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .deadline-overdue { color: #ef4444; }
+        .deadline-today { color: #f59e0b; }
+        .deadline-normal { color: var(--text-muted); }
 
         /* PROGRESS BAR STYLING */
         .progress-wrapper {
@@ -736,6 +801,12 @@
                     </div>
                 </div>
 
+                <!-- DAGENS FOKUS / FROG SECTION -->
+                <div class="focus-box" id="focusBox">
+                    <div class="focus-title"><i class="fa-solid fa-star"></i> Dagens Primære Fokus (Frog of the Day)</div>
+                    <div class="focus-list" id="focusList"></div>
+                </div>
+
                 <h3 style="margin-top:20px; font-size:1rem; color:var(--text-muted);"><i class="fa-solid fa-calendar-week"></i> UGEPLAN</h3>
                 <div class="calendar-grid">
                     <div class="calendar-col" ondragover="event.preventDefault()" ondrop="handleCalDrop('Mandag-onsdag', event)">
@@ -754,6 +825,14 @@
             </div>
 
             <div id="page-board" class="page">
+                <div class="kanban-header-bar">
+                    <label for="kanbanSortSelect"><i class="fa-solid fa-arrow-down-short-wide"></i> Sorter Kanban efter:</label>
+                    <select id="kanbanSortSelect" onchange="renderKanban()">
+                        <option value="none">Standard</option>
+                        <option value="date">Planlagt Dato</option>
+                        <option value="prio">Prioritet</option>
+                    </select>
+                </div>
                 <div class="kanban-board">
                     <div class="kanban-col" ondragover="event.preventDefault()" ondrop="handleKanbanDrop('Venter', event)">
                         <div class="kanban-col-header">Venter <span id="cnt-todo">0</span></div>
@@ -777,7 +856,7 @@
                 </div>
 
                 <div style="margin-bottom:12px;">
-                    <input type="text" id="taskSearchInput" placeholder="Søg i opgaver..." oninput="render()" style="width:300px;">
+                    <input type="text" id="taskSearchInput" placeholder="Søg i opgaver eller tags..." oninput="render()" style="width:300px;">
                 </div>
                 <div class="task-table-container">
                     <table>
@@ -787,7 +866,7 @@
                                 <th style="width:40px; text-align:center;">Fokus</th>
                                 <th>Opgavebeskrivelse</th>
                                 <th style="width:130px;">Planlagt dag</th>
-                                <th class="sortable" style="width:120px;" onclick="sortTable('date')">Dato <span id="sort-icon-date"></span></th>
+                                <th class="sortable" style="width:130px;" onclick="sortTable('date')">Dato <span id="sort-icon-date"></span></th>
                                 <th class="sortable" style="width:100px;" onclick="sortTable('priority')">Prioritet <span id="sort-icon-priority"></span></th>
                                 <th class="sortable" style="width:110px;" onclick="sortTable('status')">Status <span id="sort-icon-status"></span></th>
                                 <th class="sortable" style="width:160px;" onclick="sortTable('pct')">Fremdrift <span id="sort-icon-pct"></span></th>
@@ -941,6 +1020,36 @@
             return dateStr;
         }
 
+        function getDeadlineHtml(dateStr, status) {
+            if (!dateStr || status === 'Fuldført') {
+                return `<span class="deadline-badge deadline-normal"><i class="fa-regular fa-calendar"></i> ${formatDateDanish(dateStr)}</span>`;
+            }
+
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            const taskDate = new Date(dateStr);
+            taskDate.setHours(0,0,0,0);
+
+            const diffTime = taskDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays < 0) {
+                return `<span class="deadline-badge deadline-overdue" title="Overskredet tidsfrist!"><i class="fa-solid fa-triangle-exclamation"></i> ${formatDateDanish(dateStr)}</span>`;
+            } else if (diffDays === 0 || diffDays === 1) {
+                return `<span class="deadline-badge deadline-today" title="Deadline i dag/i morgen!"><i class="fa-solid fa-clock"></i> ${formatDateDanish(dateStr)}</span>`;
+            } else {
+                return `<span class="deadline-badge deadline-normal"><i class="fa-regular fa-calendar"></i> ${formatDateDanish(dateStr)}</span>`;
+            }
+        }
+
+        function filterByTag(tag) {
+            const searchInput = document.getElementById('taskSearchInput');
+            if (searchInput) {
+                searchInput.value = tag;
+            }
+            switchPage('tasks');
+        }
+
         function loadState() {
             let raw = localStorage.getItem(STORAGE_KEY);
             if (raw) {
@@ -1007,6 +1116,9 @@
 
         function clearGaugeFilter() {
             state.activeGaugeFilter = null;
+            if (document.getElementById('taskSearchInput')) {
+                document.getElementById('taskSearchInput').value = '';
+            }
             render();
         }
 
@@ -1110,12 +1222,17 @@
 
         function getFilteredTasks() {
             const respFilter = document.getElementById('responsibleFilter').value;
-            const search = document.getElementById('taskSearchInput') ? document.getElementById('taskSearchInput').value.toLowerCase() : '';
+            const search = document.getElementById('taskSearchInput') ? document.getElementById('taskSearchInput').value.toLowerCase().trim() : '';
 
             let list = state.tasks.filter(t => {
                 if (respFilter === 'mine' && !t.responsible) return false;
                 if (respFilter === 'not_mine' && t.responsible) return false;
-                if (search && !t.name.toLowerCase().includes(search)) return false;
+                
+                if (search) {
+                    const matchName = t.name.toLowerCase().includes(search);
+                    const matchTag = (t.tags || []).some(tag => tag.toLowerCase().includes(search.replace('#', '')));
+                    if (!matchName && !matchTag) return false;
+                }
 
                 if (state.activeGaugeFilter) {
                     if (state.activeGaugeFilter === 'Kritiske') {
@@ -1175,6 +1292,27 @@
             document.getElementById('val-active').textContent = tasks.filter(t => t.status === 'Igangsat').length;
             document.getElementById('val-todo').textContent = tasks.filter(t => t.status === 'Venter').length;
             document.getElementById('val-late').textContent = tasks.filter(t => t.status !== 'Fuldført' && new Date(t.date) < new Date()).length;
+
+            // RENDER DAGENS FOKUS / FROGS
+            const focusList = document.getElementById('focusList');
+            const focusBox = document.getElementById('focusBox');
+            focusList.innerHTML = '';
+
+            const frogs = tasks.filter(t => t.isFrog && t.status !== 'Fuldført');
+            if (frogs.length === 0) {
+                focusBox.style.display = 'none';
+            } else {
+                focusBox.style.display = 'flex';
+                frogs.forEach(f => {
+                    focusList.insertAdjacentHTML('beforeend', `
+                        <div class="focus-card" onclick="openNoteModal('${f.id}')">
+                            <span style="font-weight:700;">${f.name}</span>
+                            <span class="prio-badge prio-${f.priority}">${f.priority}</span>
+                            <span style="font-size:0.8rem; color:var(--text-muted);">${f.pct}%</span>
+                        </div>
+                    `);
+                });
+            }
         }
 
         function createProgressBarHtml(pct) {
@@ -1203,7 +1341,7 @@
                             ${createProgressBarHtml(task.pct)}
                             <span style="font-weight:700; font-size:0.8rem;">${task.pct}%</span>
                         </div>
-                        <div style="font-size:0.75rem; color:var(--text-muted);">Dato: ${formatDateDanish(task.date)}</div>
+                        <div>${getDeadlineHtml(task.date, task.status)}</div>
                     </div>
                 `;
                 if (task.plannedDay === 'Mandag-onsdag') listMonWed.insertAdjacentHTML('beforeend', card);
@@ -1229,17 +1367,30 @@
 
             listTodo.innerHTML = ''; listActive.innerHTML = ''; listDone.innerHTML = '';
 
-            getFilteredTasks().forEach(task => {
-                const tagsHtml = (task.tags || []).map(tag => `<span class="tag-badge">#${tag}</span>`).join('');
+            let filtered = getFilteredTasks();
+            const kanbanSort = document.getElementById('kanbanSortSelect') ? document.getElementById('kanbanSortSelect').value : 'none';
+
+            if (kanbanSort === 'date') {
+                filtered.sort((a,b) => (a.date || '').localeCompare(b.date || ''));
+            } else if (kanbanSort === 'prio') {
+                const pMap = { 'Høj': 3, 'Mellem': 2, 'Lav': 1 };
+                filtered.sort((a,b) => (pMap[b.priority] || 0) - (pMap[a.priority] || 0));
+            }
+
+            filtered.forEach(task => {
+                const tagsHtml = (task.tags || []).map(tag => `<span class="tag-badge" onclick="event.stopPropagation(); filterByTag('${tag}')">#${tag}</span>`).join('');
                 const card = `
                     <div class="kanban-card" draggable="true" ondragstart="state.draggedTaskId='${task.id}'" onclick="openNoteModal('${task.id}')">
-                        <div style="font-weight:600;">${task.name}</div>
+                        <div style="font-weight:600; display:flex; justify-content:space-between; align-items:center;">
+                            <span>${task.name}</span>
+                            ${task.isFrog ? '⭐' : ''}
+                        </div>
                         <div>${tagsHtml}</div>
                         <div style="display:flex; align-items:center; gap:8px;">
                             ${createProgressBarHtml(task.pct)}
                             <span style="font-weight:700; font-size:0.8rem;">${task.pct}%</span>
                         </div>
-                        <div style="font-size:0.75rem; color:var(--text-muted);"><i class="fa-regular fa-calendar"></i> ${formatDateDanish(task.date)}</div>
+                        <div>${getDeadlineHtml(task.date, task.status)}</div>
                     </div>
                 `;
                 if (task.status === 'Venter') listTodo.insertAdjacentHTML('beforeend', card);
@@ -1291,6 +1442,7 @@
 
             getFilteredTasks().forEach(task => {
                 const commentCount = (task.comments || []).length;
+                const tagsHtml = (task.tags || []).map(tag => `<span class="tag-badge" onclick="event.stopPropagation(); filterByTag('${tag}')">#${tag}</span>`).join('');
                 
                 tbody.insertAdjacentHTML('beforeend', `
                     <tr class="task-row">
@@ -1305,7 +1457,8 @@
                             </span>
                         </td>
                         <td class="task-name-cell" onclick="openNoteModal('${task.id}')">
-                            ${task.name} ${commentCount > 0 ? `<span style="font-size:0.75rem; color:var(--text-muted); margin-left:6px;"><i class="fa-solid fa-comment"></i> ${commentCount}</span>` : ''}
+                            <div>${task.name} ${commentCount > 0 ? `<span style="font-size:0.75rem; color:var(--text-muted); margin-left:6px;"><i class="fa-solid fa-comment"></i> ${commentCount}</span>` : ''}</div>
+                            <div style="margin-top:4px;">${tagsHtml}</div>
                         </td>
                         <td>
                             <div id="cell-day-${task.id}">
@@ -1317,7 +1470,7 @@
                         <td>
                             <div id="cell-date-${task.id}">
                                 <span class="clean-clickable-cell" onclick="triggerInlineEdit('${task.id}', 'date')">
-                                    ${formatDateDanish(task.date)}
+                                    ${getDeadlineHtml(task.date, task.status)}
                                 </span>
                             </div>
                         </td>
