@@ -36,7 +36,6 @@
             --star-color: #e0af68;
         }
 
-        /* BEHAGELIGT DÆMPET MELLEM-LYST TEMA (SOFT SLATE) */
         [data-theme="nordicfrost"] {
             --bg: #e2e8f0;
             --sidebar-bg: #cbd5e1;
@@ -416,7 +415,6 @@
             color: var(--accent);
         }
 
-        /* ELEGANT DISKRET REDIGERING I TABEL */
         .clean-clickable-cell {
             cursor: pointer;
             padding: 4px 6px;
@@ -493,7 +491,6 @@
             padding: 0 4px;
         }
 
-        /* FOOTER / RIGHTS STYLING */
         .rights-footer {
             margin-top: auto;
             padding-top: 16px;
@@ -946,7 +943,6 @@
 
         function loadState() {
             let raw = localStorage.getItem(STORAGE_KEY);
-            
             if (raw) {
                 try {
                     state.tasks = JSON.parse(raw);
